@@ -1,15 +1,24 @@
 import './App.css'
-import { useState } from 'react';
+import Box from './component/Box.jsx';
 
+// 1. 박스 2개 (타이틀, 사진, 결과)
+// 2. 가위 바위 보 버튼이 있다.
+// 3. 버튼을 클릭하면 클릭한 값이 박스에 보임
+// 4. 컴퓨터는 랜덤하게 아이템 선택이 된다.
+// 5. 3,4의 결과를 가지고 누가 이겼는지 승패를 따진다.
+// 6. 승패 결과에 따라 테두리 색이 바뀐다 ( win - 초록, lose - 빨강, draw - 검정)
 function App() {
-  const [counter, setCounter] = useState(0);
-  const increase = () => {
-    setCounter(counter + 1);
-  }
   return (
-    <div>
-      <div>{counter}</div>
-      <button onClick={increase}>Increment</button>
+    <div class='container'>
+      <div className='box-container'>
+        <Box title="You" />
+        <Box title="Computer" />
+      </div>
+      <div className='button-container'>
+        <button>가위</button>
+        <button>바위</button>
+        <button>보</button>
+      </div>
     </div>
   )
 }
