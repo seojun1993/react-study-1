@@ -12,15 +12,15 @@ import { useState } from 'react';
 
 const choice = {
   rock: {
-    name : 'Rock',
+    name : 'rock',
     img : 'https://thumb.ac-illust.com/07/07b5ccdc4ec9d6acbc516d53ef1dab33_t.jpeg',
   },
   scissors: {
-    name : 'Scissors',
+    name : 'scissors',
     img : 'https://upload.wikimedia.org/wikipedia/commons/9/97/Standard_household_scissors.jpg',
   },
   paper: {
-    name : 'Paper',
+    name : 'paper',
     img : 'https://e7.pngegg.com/pngimages/348/695/png-clipart-rock-paper-scissors-rock-paper-scissors-lizard-spock-rock-paper-scissors-llc-hands-hand-love-game.png',
   }
 }
@@ -29,22 +29,40 @@ const choice = {
 function App() {
   const [userSelect, setUserSelect] = useState(null);
   const [computerSelect, setComputerSelect] = useState(null);
-
+  const [result, setResult] = useState("");
+  
   const play = ( userChoice ) => {
     setUserSelect(choice[userChoice]);
-    computerPlay();
+    let computeChoice = randomChoice();
+    setComputerSelect(computeChoice);
+    setResult(judgeMent(choice[userChoice], computeChoice));
   }
 
-  const computerPlay = () => {
-    const computerChoice = Object.keys(choice)[Math.floor(Math.random() * Object.keys(choice).length)];
-    setComputerSelect(choice[computerChoice]);
+  const randomChoice = () => {
+    let itemArray = Object.keys(choice);
+    let randomItem = Math.floor(Math.random() * itemArray.length);
+    let final = itemArray[randomItem];
+    return choice[final];
+  }
+
+  const judgeMent = (user, computer) => {
+    if(user.name === computer.name){ return 'draw' }
+    else if(user.name === 'rock'){
+      return computer.name === 'scissors' ? 'win' : 'lose';
+    }
+    else if(user.name === 'scissors'){
+      return computer.name === 'paper' ? 'win' : 'lose';
+    }
+    else if(user.name === 'paper'){
+      return computer.name === 'rock' ? 'win' : 'lose';
+    }
   }
 
   return (
     <div class='container'>
       <div className='box-container'>
-        <Box title="You" item={userSelect}/>
-        <Box title="Computer" item={computerSelect}/>
+        <Box title="You" item={userSelect} result={result}/>
+        <Box title="Computer" item={computerSelect} result={result}/>
       </div>
       <div className='button-container'>
         <button onClick={() => play('scissors')}>가위</button>
